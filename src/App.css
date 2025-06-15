@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #0066FF;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  text-align: center;
+  padding: 30px;
+}
+
+.state {
+  margin-top: 30px;
+  padding: 30px;
+  background-color: #0044BB;
+  border: 1px solid #0044BB;
+  border-radius: 10px;
+}
