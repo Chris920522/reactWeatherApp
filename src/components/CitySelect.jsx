@@ -6,7 +6,6 @@ function CitySelect({ selectedCity,  setSelectedCity }) {
       id="city"
       value={selectedCity}
       onChange={e => setSelectedCity(e.target.value)}
-      className="p-2 rounded"
     >
       <option value="Taipei">台北</option>
       <option value="Tokyo">東京</option>

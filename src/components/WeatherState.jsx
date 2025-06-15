@@ -82,7 +82,7 @@ function WeatherState({ selectedCity }) {
         <p>載入中...</p>
       ) : (
         <>
-          <img src={icon} alt={weatherCondition} className="w-24 h-24" />
+          <img src={icon} alt={weatherCondition} />
           <p>{weatherConditionMap[weatherCondition] || weatherCondition}</p>
           {/* 優先顯示中文，沒有對應時顯示英文 */}
         </>
