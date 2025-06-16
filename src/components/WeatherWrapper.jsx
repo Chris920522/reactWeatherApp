@@ -8,7 +8,7 @@ function WeatherWrapper() {
     <>
       <div className="wrapper">
         <h1>天氣狀況</h1>
-         <CitySelect selectedCity={selectedCity} setSelectedCity={setSelectedCity} />
+        <CitySelect setSelectedCity={setSelectedCity} />
         <WeatherState selectedCity={selectedCity} />
       </div>
     </>

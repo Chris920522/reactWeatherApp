@@ -24,3 +24,9 @@ body {
   border: 1px solid #0044BB;
   border-radius: 10px;
 }
+
+.searchBar {
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid #0066FF;
+}

@@ -48,28 +48,35 @@ function WeatherState({ selectedCity }) {
   const [weatherCondition, setWeatherCondition] = useState(''); //天氣狀態變化
   const [loading, setLoading] = useState(true);
 
-  const API_KEY = '4e58aa80547c3de395320c706693d7b7';
+  const API_KEY = import.meta.env.VITE_WEATHER_API_KEY; ;
 
   useEffect(() => {
-    console.log("目前選擇城市：", selectedCity);
-    const { lat, lon } = cityCoordinates[selectedCity];
-    console.log("座標：", lat, lon);
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const condition = data.weather[0].main;
-        console.log("API 回傳天氣狀態:", condition);
-        console.log("API完整資料:", data)
-        setWeatherCondition(condition);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("發生錯誤", error);
-        setLoading(false);
-      });
-  }, [selectedCity]);
+      if (!selectedCity) return;
+      // 防止 undefined 時就呼叫 API
+  console.log("目前選擇城市：", selectedCity);
+
+  setLoading(true);
+
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${API_KEY}&units=metric&lang=zh_tw`)
+
+//   q=城市名稱 是 OpenWeather API 支援的方式之一。
+// appid=${API_KEY} 是授權金鑰（.env 變數導入）
+// units=metric 代表使用「公制」單位（攝氏 °C）
+
+
+    .then((res) => res.json())
+    .then((data) => {
+      const condition = data.weather[0].main;
+      console.log("API 回傳天氣狀態:", condition);
+      console.log(data);//測試用
+      setWeatherCondition(condition);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("發生錯誤", error);
+      setLoading(false);
+    });
+}, [selectedCity]);
 
   const icon = weatherIcons[weatherCondition] || cloudIcon;
   // 先用 weatherCondition（API 回傳的天氣英文狀態）去查 weatherIcons 對照表，取得對應的圖示。
@@ -85,6 +92,8 @@ function WeatherState({ selectedCity }) {
           <img src={icon} alt={weatherCondition} />
           <p>{weatherConditionMap[weatherCondition] || weatherCondition}</p>
           {/* 優先顯示中文，沒有對應時顯示英文 */}
+          <br />
+          <p>{selectedCity}</p>
         </>
       )}
     </div>
