@@ -17,24 +17,6 @@ const weatherIcons = {
   Wind: windIcon,
 };
 
-const weatherConditionMap = {
-  Clear: "晴朗",
-  Clouds: "多雲",
-  Drizzle: "毛毛雨",
-  Rain: "下雨",
-  Snow: "下雪",
-  Mist: "薄霧",
-  Fog: "霧",
-  Thunderstorm: "雷雨",
-  Haze: "霾",
-  Smoke: "煙霧",
-  Dust: "沙塵",
-  Sand: "沙塵",
-  Ash: "火山灰",
-  Squall: "狂風",
-  Tornado: "龍捲風",
-};
-
 function WeatherState({ selectedCity }) {
   const [weatherCondition, setWeatherCondition] = useState(''); //天氣狀態變化
   const [loading, setLoading] = useState(true);
@@ -56,7 +38,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=$
 //lang=zh_tw代表支援中文
     .then((res) => res.json())
     .then((data) => {
-      const condition = data.weather[0].main;
+      const condition = data.weather[0].description;
       console.log("API 回傳天氣狀態:", condition);
       console.log(data);//測試用
       setWeatherCondition(condition);
