@@ -18,8 +18,11 @@ const weatherIcons = {
 };
 
 function WeatherState({ selectedCity }) {
-  const [weatherCondition, setWeatherCondition] = useState(''); //天氣狀態變化
+  const [weatherCondition, setWeatherCondition] = useState(''); //天氣狀態
   const [loading, setLoading] = useState(true);
+  const [currentHumidity, setCurrentHumidity] = useState(''); //濕度
+  const [weatherMain, setWeatherMain] = useState('');//天氣圖標
+  const [feelsLike, setFeelsLike] = useState('')//體感溫度
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY; ;
 
@@ -38,10 +41,16 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=$
 //lang=zh_tw代表支援中文
     .then((res) => res.json())
     .then((data) => {
+      const conditionMain = data.weather[0].main;
       const condition = data.weather[0].description;
+      const humidity = data.main.humidity;
+      const tem = data.main.feels_like;
       console.log("API 回傳天氣狀態:", condition);
       console.log(data);//測試用
       setWeatherCondition(condition);
+      setCurrentHumidity(humidity);
+      setWeatherMain(conditionMain); 
+      setFeelsLike(tem);
       setLoading(false);
     })
     .catch((error) => {
@@ -50,7 +59,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=$
     });
 }, [selectedCity]);
 
-  const icon = weatherIcons[weatherCondition] || cloudIcon;
+  const icon = weatherIcons[weatherMain] || cloudIcon;
   // 先用 weatherCondition（API 回傳的天氣英文狀態）去查 weatherIcons 對照表，取得對應的圖示。
   // 如果查得到（例如 Clear 會對應到晴天圖示），就顯示對應圖示。
   // 如果查不到（對照表沒有這個天氣狀態），就顯示預設的 cloudIcon（多雲圖示）。
@@ -65,6 +74,9 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=$
           <p>{weatherCondition }</p>
           <br />
           <p>{selectedCity}</p>
+          <br />
+          <p>目前體感溫度:{feelsLike}℃</p>
+          <p>目前濕度:{currentHumidity}%</p>
         </>
       )}
     </div>
