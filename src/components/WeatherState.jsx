@@ -35,15 +35,6 @@ const weatherConditionMap = {
   Tornado: "龍捲風",
 };
 
-//城市座標
-const cityCoordinates = {
-  Taipei: { lat: 25.0330, lon: 121.5654 },
-  Tokyo: { lat: 35.6895, lon: 139.6917 },
-  NewYork: { lat: 40.7128, lon: -74.0060 },
-  London: { lat: 51.5072, lon: -0.1276 },
-  Paris: { lat: 48.8566, lon: 2.3522 },
-};
-
 function WeatherState({ selectedCity }) {
   const [weatherCondition, setWeatherCondition] = useState(''); //天氣狀態變化
   const [loading, setLoading] = useState(true);
@@ -62,8 +53,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=$
 //   q=城市名稱 是 OpenWeather API 支援的方式之一。
 // appid=${API_KEY} 是授權金鑰（.env 變數導入）
 // units=metric 代表使用「公制」單位（攝氏 °C）
-
-
+//lang=zh_tw代表支援中文
     .then((res) => res.json())
     .then((data) => {
       const condition = data.weather[0].main;
@@ -90,8 +80,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=$
       ) : (
         <>
           <img src={icon} alt={weatherCondition} />
-          <p>{weatherConditionMap[weatherCondition] || weatherCondition}</p>
-          {/* 優先顯示中文，沒有對應時顯示英文 */}
+          <p>{weatherCondition }</p>
           <br />
           <p>{selectedCity}</p>
         </>
